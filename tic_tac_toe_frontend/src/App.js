@@ -9,15 +9,18 @@ import './index.css';
 export function calculateWinner(cells) {
   /** Determine winner and winning line indices if present.
    * Returns: { winner: 'X'|'O'|null, line: number[]|null }
+   * We iterate over the set of all winning combinations.
    */
-  const lines = [
+  // All possible winning triplets
+  const WIN_LINES = [
     [0,1,2], [3,4,5], [6,7,8], // rows
     [0,3,6], [1,4,7], [2,5,8], // cols
     [0,4,8], [2,4,6],          // diags
   ];
-  for (const [a,b,c] of lines) {
+  for (let i = 0; i < WIN_LINES.length; i += 1) {
+    const [a, b, c] = WIN_LINES[i];
     if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
-      return { winner: cells[a], line: [a,b,c] };
+      return { winner: cells[a], line: [a, b, c] };
     }
   }
   return { winner: null, line: null };
@@ -36,11 +39,7 @@ export function getBestAIMove(cells, aiMark, humanMark) {
   const { winner: _w } = calculateWinner(cells);
   if (_w || empty.length === 0) return null;
 
-  const lines = [
-    [0,1,2],[3,4,5],[6,7,8],
-    [0,3,6],[1,4,7],[2,5,8],
-    [0,4,8],[2,4,6],
-  ];
+  // Note: Explicit win lines aren't needed here; calculateWinner handles checks
 
   // 1) Try to win
   for (const i of empty) {
@@ -107,7 +106,7 @@ function GameBoard({ cells, onCellClick, winningLine }) {
             index={idx}
             value={val}
             onClick={() => onCellClick(idx)}
-            isWinning={winningLine?.includes(idx)}
+            isWinning={!!(winningLine && winningLine.includes(idx))}
           />
         ))}
       </div>
