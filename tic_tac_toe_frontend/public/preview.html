@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tic Tac Toe — Violet Dreams</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!-- CRA will inject scripts in index.html; in some preview setups this file is used to proxy to index.html -->
+    <script>
+      // Redirect to main index when served as /preview.html by the environment.
+      if (location.pathname.endsWith('/preview.html')) {
+        const target = location.origin + '/';
+        if (location.href !== target) location.replace(target);
+      }
+    </script>
+  </body>
+</html>
